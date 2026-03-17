@@ -30,7 +30,7 @@ fi
 
 nvidia-smi
 
-accelerate launch --config_file accelerate_configs/zero1.yaml train.py \
+python train.py \
     --draft_model_name_or_path $model \
     --target_model_name_or_path "path/to/target/checkpoint-2802" \
     \
@@ -39,9 +39,9 @@ accelerate launch --config_file accelerate_configs/zero1.yaml train.py \
     --bf16 True \
     --output_dir "./checkpoints/$version" \
     --num_train_epochs 15 \
-    --per_device_train_batch_size 2 \
-    --gradient_accumulation_steps 1 \
-    --per_device_eval_batch_size 8 \
+    --per_device_train_batch_size 1 \
+    --gradient_accumulation_steps 8 \
+    --per_device_eval_batch_size 2 \
     --eval_accumulation_steps 1 \
     --eval_strategy "epoch" \
     --save_strategy "epoch" \
