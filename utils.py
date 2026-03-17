@@ -164,6 +164,7 @@ class CustomTrainer(Trainer):
         outputs = model(**inputs)
         with torch.no_grad():
             target_outputs = self.target_model(**inputs, use_cache=False)
+            self.target_model.eval()
 
         logits = outputs["logits"]
         target_logits = target_outputs["logits"]
@@ -182,8 +183,9 @@ class CustomTrainer(Trainer):
         shift_logits = shift_logits.float()
         shift_target_logits = shift_target_logits.float()
 
-        p = F.softmax(shift_target_logits, dim=-1)
-        q_log = F.log_softmax(shift_logits, dim=-1)
+        T = 2.0
+        p = F.softmax(shift_target_logits/T, dim=-1)
+        q_log = F.log_softmax(shift_logits/T, dim=-1)
 
         if num_items_in_batch is not None:
             loss_fct = nn.KLDivLoss(reduction="sum")
