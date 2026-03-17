@@ -143,18 +143,18 @@ class CustomTrainer(Trainer):
         super().__init__(*args_, **kwargs)
         self.ref_model = ref_model
         self.target_model = target_model
-        from trl.trainer.utils import prepare_deepspeed
+        # from trl.trainer.utils import prepare_deepspeed
         if self.ref_model is not None:
-            self.ref_model = prepare_deepspeed(
-                self.ref_model, self.args.per_device_train_batch_size, self.args.fp16,
-                self.args.bf16
-            )
+            # self.ref_model = prepare_deepspeed(
+            #     self.ref_model, self.args.per_device_train_batch_size, self.args.fp16,
+            #     self.args.bf16
+            # )
             self.ref_model.eval()
         if self.target_model is not None:
-            self.target_model = prepare_deepspeed(
-                self.target_model, self.args.per_device_train_batch_size, self.args.fp16,
-                self.args.bf16
-            )
+            # self.target_model = prepare_deepspeed(
+            #     self.target_model, self.args.per_device_train_batch_size, self.args.fp16,
+            #     self.args.bf16
+            # )
             self.target_model.eval()
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
