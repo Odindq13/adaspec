@@ -30,17 +30,17 @@ fi
 
 nvidia-smi
 
-accelerate launch --config_file accelerate_configs/zero1.yaml train.py \
+python train.py \
     --model_name_or_path $model \
     \
     --data_name gsm8k \
     \
     --fp16 True \
     --output_dir "./checkpoints/$version" \
-    --num_train_epochs 6 \
+    --num_train_epochs 3 \
     --per_device_train_batch_size 2 \
     --gradient_accumulation_steps 1 \
-    --per_device_eval_batch_size 8 \
+    --per_device_eval_batch_size 4 \
     --eval_accumulation_steps 1 \
     --eval_strategy "epoch" \
     --save_strategy "epoch" \
